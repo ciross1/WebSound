@@ -48,7 +48,19 @@ public class Sounds {
     private String fileUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private List<String> tags; //Palabras clave para búsqueda
+
+
+
+    // Crea automáticamente una tabla auxiliar llamada sound_tags: Esta vez NO hemos usado many to many, sino @ElementCollection
+    // que se usa cuando quieres guardar una lista de valores simples (por ejemplo, List<String> o Set<Integer>) dentro de una entidad,
+    //pero esos valores no son otra entidad completa con su propio @Id
+    @ElementCollection
+    @CollectionTable(
+            name = "sound_tags",   // Nombre de la tabla intermedia
+            joinColumns = @JoinColumn(name = "sound_id") // FK hacia sounds
+    )
+    @Column(name = "tag") //Columna donde se guarda cada palabra
+    private List<String> tags;
     private boolean isActive;
 
 
